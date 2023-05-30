@@ -1,0 +1,48 @@
+SPACE COMPLEXITY : O(N) using 1 stack
+
+void solve( stack<int>& stk, int elem ){
+
+    if( stk.empty() ){
+        stk.push(elem);
+        return;
+    }
+
+    int num = stk.top();
+    stk.pop();
+    // store the elements;
+
+    solve(stk, elem);
+
+    stk.push(num);
+    // to push back the element popped out after the recursive call;
+
+}
+void insertBottom( stack<int>& stk, int elem ){
+    
+    // insert at the bottom of the stack;
+    solve( stk, elem );
+}
+
+void reverseStack( stack<int>& stk ){
+
+    if( stk.empty() ){
+        return;
+    }
+
+    int num = stk.top();
+    stk.pop();
+
+    // pick top element of curr stack and then call for reverse of remaining stack
+    reverseStack( stk );
+
+    // now assume that remaining stack has been reversed and just insert at bottom of that stack;
+    // eg {1,2,3,4};
+    // pick 4 and reverse remaining stack
+    // remaining stack is lets say x;
+    // insert at bottom of x;
+    // return {4,x};
+    
+    insertBottom( stk, num );
+
+}
+
