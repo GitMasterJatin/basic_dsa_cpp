@@ -1,0 +1,22 @@
+void solve( stack<int>& stk, int elem ){
+
+    if( stk.empty() ){
+        stk.push(elem);
+        return;
+    }
+
+    int num = stk.top();
+    stk.pop();
+    // store the elements;
+
+    solve(stk, elem);
+
+    stk.push(num);
+    // to push back the element popped out after the recursive call;
+
+}
+void insertBottom( stack<int>& stk, int elem ){
+    
+    // insert at the bottom of the stack;
+    solve( stk, elem );
+}
