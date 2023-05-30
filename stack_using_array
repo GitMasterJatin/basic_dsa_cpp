@@ -1,0 +1,88 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+#define ll long long int
+
+class Stack
+{
+
+public:
+    int *arr;
+    int top;
+    int size;
+
+    Stack(int size)
+    {
+        this->size = size;
+        arr = new int[size];
+        top = -1;
+    }
+
+    void push(int elem)
+    {
+
+        if (top + 1 >= size)
+        {
+            cout << " Stack overflow" << endl;
+        }
+        else
+        {
+            top++;
+            arr[top] = elem;
+        }
+    }
+
+    void pop()
+    {
+
+        if (top < 0)
+        {
+            cout << " Stack underflow" << endl;
+        }
+        else
+        {
+            top--;
+        }
+    }
+
+    int peek()
+    {
+
+        if (top >= 0 && top < size)
+        {
+            return arr[top];
+        }
+        else
+        {
+            cout << " Stack is empty" << endl;
+            return -1;
+        }
+    }
+
+    bool isEmpty()
+    {
+
+        if (top < 0)
+        {
+            return true;
+        }
+        return false;
+    }
+};
+
+int main()
+{
+    Stack st(5);
+    st.push(5);
+    cout << st.peek() << endl;
+    cout << st.isEmpty() << endl;
+    st.pop();
+    cout << st.peek() << endl;
+    st.push(5);
+    st.push(5);
+    st.push(5);
+    st.push(5);
+    st.push(5);
+    st.push(5);
+    return 0;
+}
