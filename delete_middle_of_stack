@@ -1,0 +1,29 @@
+void solve( stack<int>& stk, int count, int size ){
+
+    if( count == size/2 ){
+        stk.pop();
+        return;
+    }
+
+    int num = stk.top();
+    stk.pop();
+    // store the elements above the middle element;
+
+    solve(stk, count + 1, size );
+
+    stk.push(num);
+    // to push back the element popped out after the recursive call;
+
+}
+void deleteMiddle( stack<int>& stk, int n ){
+    
+    // delete the middle element of the stack;
+    // eg {1,2,3,4,5};
+    // delete 3 and return {1,2,4,5};
+    // in case of even size;
+    // {1,2,3,4} return {1,3,4};
+    
+    int count = 0;
+    solve( stk, count, n );
+    // n is the size of the stack;
+}
