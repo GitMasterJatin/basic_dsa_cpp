@@ -1,0 +1,47 @@
+vector<ll>printFirstNegativeInteger( vector<ll>&v, int n, int k ){
+    // sliding window
+    // return the first negative integer in a window of size k.
+
+    deque<ll>dq;
+    vector<ll> ans;
+    
+    // process first window of size k
+
+    for( int i  = 0; i < k; i++ ){
+        if( v[i] < 0 ){
+            dq.push_back(i);
+        }
+    }
+
+    // store answer of first window
+    
+    if( dq.size() > 0 ){
+        ans.push_back(v[dq.front()]);
+    }
+    else{
+        ans.push_back(0);
+    }
+
+    // work on remaining elements
+    for( int i = k; i < n; i++ ){
+        // check size of the queue.
+        if( !dq.empty() && i - dq.front() >= k ){
+            dq.pop_front();
+        }
+        // if curr elem is negative then add as it might be a possible answer
+        if( v[i] < 0 ){
+            dq.push_back(i);
+        }
+        // the answer of the curr window will always be the first elem as
+        // queue mei negative wale hi stored hain
+        if( dq.size() > 0 ){
+            ans.push_back(v[dq.front()]);
+        }
+        else{
+            ans.push_back(0);
+        }
+    }
+
+    return ans;
+    
+}
