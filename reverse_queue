@@ -1,0 +1,37 @@
+T.C : O(N)
+S.C : O(N)
+void reverse(queue<int> &q)
+{
+    // use LIFO property of stack
+    stack<int> st;
+
+    while (!q.empty())
+    {
+        int x = q.front();
+        q.pop();
+        st.push(x);
+    }
+
+    while (!st.empty())
+    {
+        int x = st.top();
+        st.pop();
+        q.push(x);
+    }
+}
+
+void reverseRecursive(queue<int> &q)
+{
+
+    if (q.empty())
+    {
+        return;
+    }
+
+    int x = q.front();
+    q.pop();
+
+    reverseRecursive(q);
+
+    q.push(x);
+}
