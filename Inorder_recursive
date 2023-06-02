@@ -1,0 +1,66 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+#define ll long long int
+
+class node
+{
+
+public:
+    int data;
+    node *left;
+    node *right;
+
+    node(int d)
+    {
+        this->data = d;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+node *buildTree(node *root)
+{
+    // cout << "Enter data: " << endl;
+    int data;
+    cin >> data;
+    root = new node(data);
+
+    if (data == -1)
+    {
+        return NULL;
+    }
+
+    // cout << "Enter left child: " << endl;
+    root->left = buildTree(root->left);
+    // cout << "Enter right child: " << endl;
+    root->right = buildTree(root->right);
+
+    return root;
+}
+
+void Inorder(node *root, vector<int> &v)
+{
+    if (!root)
+    {
+        return;
+    }
+
+    Inorder(root->left, v);
+    v.push_back(root->data);
+    Inorder(root->right, v);
+}
+int main()
+{
+    node *root = NULL;
+
+    root = buildTree(root);
+    vector<int> inorder;
+    Inorder(root, inorder);
+
+    for (int i = 0; i < inorder.size(); i++)
+    {
+        cout << inorder[i] << " ";
+    }
+
+    return 0;
+}
