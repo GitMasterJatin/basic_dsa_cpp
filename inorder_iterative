@@ -1,0 +1,81 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+#define ll long long int
+
+class node
+{
+
+public:
+    int data;
+    node *left;
+    node *right;
+
+    node(int d)
+    {
+        this->data = d;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+node *buildTree(node *root)
+{
+    // cout << "Enter data: " << endl;
+    int data;
+    cin >> data;
+    root = new node(data);
+
+    if (data == -1)
+    {
+        return NULL;
+    }
+
+    // cout << "Enter left child: " << endl;
+    root->left = buildTree(root->left);
+    // cout << "Enter right child: " << endl;
+    root->right = buildTree(root->right);
+
+    return root;
+}
+
+void Inorder_iterative(node *root, vector<int> &v)
+{
+    stack<node *> st;
+    node *curr = root;
+
+    while (curr != NULL || !st.empty())
+    {
+
+        // go the the left most child.
+        while (curr != NULL)
+        {
+            st.push(curr);
+            curr = curr->left;
+        }
+
+        // now that we have reached the leftmost push it to the answer
+        // and then go to right
+
+        curr = st.top();
+        v.push_back(curr->data);
+        st.pop();
+
+        // left subtree has been visited so go back to right.
+        curr = curr->right;
+    }
+}
+int main()
+{
+    node *root = NULL;
+
+    root = buildTree(root);
+    vector<int> inorder;
+    Inorder_iterative(root, inorder);
+
+    for (int i = 0; i < inorder.size(); i++)
+    {
+        cout << inorder[i] << " ";
+    }
+
+    return 0;
+}
