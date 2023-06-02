@@ -1,0 +1,110 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+#define ll long long int
+
+class node
+{
+
+public:
+    int data;
+    node *left;
+    node *right;
+
+    node(int d)
+    {
+        this->data = d;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+node *buildTree(node *root)
+{
+    // cout << "Enter data: " << endl;
+    int data;
+    cin >> data;
+    root = new node(data);
+
+    if (data == -1)
+    {
+        return NULL;
+    }
+
+    // cout << "Enter left child: " << endl;
+    root->left = buildTree(root->left);
+    // cout << "Enter right child: " << endl;
+    root->right = buildTree(root->right);
+
+    return root;
+}
+
+void postorder_iterative(node *root, vector<int> &v)
+{
+    if (root == NULL)
+        return;
+
+    stack<node *> st;
+    st.push(root);
+    node *prev = NULL;
+
+    while (!st.empty())
+    {
+        node *curr = st.top();
+
+        if (prev == NULL || prev->left == curr || prev->right == curr)
+        {
+
+            if (curr->left)
+            {
+                st.push(curr->left);
+            }
+            else if (curr->right)
+            {
+                st.push(curr->right);
+            }
+            else
+            {
+                st.pop();
+                v.push_back(curr->data);
+            }
+        }
+
+        else if (curr->left == prev)
+        {
+
+            if (curr->right)
+            {
+                st.push(curr->right);
+            }
+            else
+            {
+                st.pop();
+                v.push_back(curr->data);
+            }
+        }
+
+        else if (curr->right == prev)
+        {
+
+            st.pop();
+            v.push_back(curr->data);
+        }
+
+        prev = curr;
+    }
+}
+int main()
+{
+    node *root = NULL;
+
+    root = buildTree(root);
+    vector<int> postorder;
+    postorder_iterative(root, postorder);
+
+    for (int i = 0; i < postorder.size(); i++)
+    {
+        cout << postorder[i] << " ";
+    }
+
+    return 0;
+}
