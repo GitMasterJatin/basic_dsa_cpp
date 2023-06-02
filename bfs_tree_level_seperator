@@ -1,0 +1,105 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+#define ll long long int
+
+class node
+{
+
+public:
+    int data;
+    node *left;
+    node *right;
+
+    node(int d)
+    {
+        this->data = d;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+node *buildTree(node *root)
+{
+    // cout << "Enter data: " << endl;
+    int data;
+    cin >> data;
+    root = new node(data);
+
+    if (data == -1)
+    {
+        return NULL;
+    }
+
+    // cout << "Enter left child: " << endl;
+    root->left = buildTree(root->left);
+    // cout << "Enter right child: " << endl;
+    root->right = buildTree(root->right);
+
+    return root;
+}
+
+vector<vector<int>> LevelOrderTraversal(node *root)
+{
+
+    if (!root)
+    {
+        return {};
+    }
+
+    vector<vector<int>> ans;
+    vector<int> curr_lvl;
+    queue<node *> q;
+    q.push(root);
+    q.push(NULL);
+
+    while (!q.empty())
+    {
+        node *temp = q.front();
+        q.pop();
+
+        if (temp == NULL)
+        {
+            ans.push_back(curr_lvl);
+            curr_lvl.clear();
+            if (!q.empty())
+            {
+                q.push(NULL);
+            }
+        }
+        else
+        {
+            curr_lvl.push_back(temp->data);
+
+            if (temp->left)
+            {
+                q.push(temp->left);
+            }
+
+            if (temp->right)
+            {
+                q.push(temp->right);
+            }
+        }
+    }
+
+    return ans;
+}
+int main()
+{
+    node *root = NULL;
+
+    root = buildTree(root);
+
+    vector<vector<int>> bfs = LevelOrderTraversal(root);
+
+    for (int i = 0; i < bfs.size(); i++)
+    {
+        vector<int> tmp = bfs[i];
+        for (int j = 0; j < tmp.size(); j++)
+        {
+            cout << tmp[j] << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
