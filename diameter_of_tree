@@ -1,0 +1,28 @@
+class Solution {
+  public:
+    int height(Node* root){
+        if( root == NULL ){
+            return 0;
+        }
+        int left = height(root->left);
+        int right = height(root->right);
+        
+        return max(left,right) + 1;
+    }
+    // Function to return the diameter of a Binary Tree.
+    int diameter(Node* root) {
+        // Your code here
+        if( root == NULL ){
+            return 0;
+        }
+        
+        int op1 = diameter(root->left);
+        // answer in left subtree
+        int op2 = diameter(root->right);
+        // answer in right subtree
+        int op3 = height(root->left) + 1 + height(root->right);
+        // answer in both subtrees and includes root
+        
+        return max(op1,max(op2,op3));
+    }
+};
