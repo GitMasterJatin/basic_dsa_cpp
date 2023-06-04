@@ -1,3 +1,4 @@
+T.C : O(N*2) due to height function
 class Solution {
   public:
     int height(Node* root){
