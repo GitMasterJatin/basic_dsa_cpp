@@ -1,0 +1,43 @@
+GFG Practice
+class Solution
+{
+    private:
+    pair<bool,int> sum(Node* root){
+        
+        if( root == NULL ){
+            pair<bool,int>p = {true,0};
+            return p;
+        }    
+        if( root->right == NULL && root->left == NULL ){
+            pair<bool,int>p = {true,root->data};
+            return p;
+        }
+        
+        pair<bool,int> left = sum(root->left);
+        pair<bool,int> right = sum(root->right);
+        
+        bool leftAns = left.first;
+        bool rightAns = right.first;
+        
+        bool currsum = root->data == left.second + right.second;
+        
+        pair<bool,int> ans;
+        
+        if( leftAns && rightAns && currsum ){
+            ans.first = true;
+            ans.second = 2*root->data;
+        }
+        else{
+            ans.first = false;
+            // no need to set second as it is false;
+        }
+        
+        return ans;
+    }
+    
+    public:
+    bool isSumTree(Node* root)
+    {
+         return sum(root).first;
+    }
+};
