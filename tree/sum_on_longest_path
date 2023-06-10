@@ -1,0 +1,33 @@
+GFG
+T.C. = O(N)
+class Solution
+{
+public:
+    void solve(Node* root, int len, int& maxlen, int curr, int& maxsum){
+        
+        // base case
+        if( root == NULL ){
+            if( len > maxlen ){
+                maxlen = len;
+                maxsum = curr;
+            }
+            else if( len == maxlen ){
+                maxsum = max(maxsum,curr);
+            }
+            return;
+        }
+        curr += root->data;
+        
+        solve(root->left,len+1,maxlen,curr,maxsum);
+        solve(root->right,len+1,maxlen,curr,maxsum);
+        
+    }
+    int sumOfLongRootToLeafPath(Node *root)
+    {
+        int len = 0, maxlen = 0, curr = 0, maxsum = 0;
+        
+        solve(root,len,maxlen,curr,maxsum);
+        
+        return maxsum;
+    }
+};
