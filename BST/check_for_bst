@@ -1,0 +1,18 @@
+ private:
+    bool solve(Node* root,int p, int q)
+        {
+        if( root == NULL ){
+            return true;
+        }    
+        if( root->data <= p || root->data >= q ){
+            return false;
+        }
+        
+        return ( solve(root->left,p,root->data) && solve(root->right,root->data,q));
+    } 
+    public:
+    //Function to check whether a Binary Tree is BST or not.
+    bool isBST(Node* root)
+    {
+        return solve(root,INT_MIN,INT_MAX);
+    }
