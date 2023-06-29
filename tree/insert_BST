@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+#define ll long long int
+
+class node
+{
+
+public:
+    int data;
+    node *left;
+    node *right;
+
+    node(int d)
+    {
+        this->data = d;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+
+node *InsertBst(node *root, int val)
+{
+    if (root == NULL)
+    {
+        node *root = new node(val);
+        return root;
+    }
+    if (val > root->data)
+    {
+        root->right = InsertBst(root->right, val);
+    }
+    else if (val < root->data)
+    {
+        root->left = InsertBst(root->left, val);
+    }
+    return root;
+}
+void Inorder(node *root, vector<int> &v)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    Inorder(root->left, v);
+    v.push_back(root->data);
+    Inorder(root->right, v);
+}
+int main()
+{
+    vector<int> data = {2, 5, 4, 10, 7, 8};
+    node *root = NULL;
+    for (int i = 0; i < data.size(); i++)
+    {
+        root = InsertBst(root, data[i]);
+    }
+    vector<int> inorder;
+    Inorder(root, inorder);
+    for (int i = 0; i < inorder.size(); i++)
+    {
+        cout << inorder[i] << endl;
+    }
+    return 0;
+}
