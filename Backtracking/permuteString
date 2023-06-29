@@ -1,0 +1,26 @@
+
+private:
+    void permute( string S, set<string>& unique, int index, int n ){
+        if( index == n ){
+            unique.insert(S);
+            return;
+        }
+        for( int i = index; i < S.length(); i++ ){
+            swap(S[i],S[index]);
+            permute(S,unique,index+1,n);
+            swap(S[i],S[index]);
+        }
+    }
+	
+public:
+		vector<string>find_permutation(string S)
+		{
+		    int n = S.length();
+		    set<string>unique;
+		    vector<string>ans;
+		    permute(S,unique,0,n);
+		    for( it : unique){
+		        ans.push_back(it);
+		    }
+		    return ans;
+		}
