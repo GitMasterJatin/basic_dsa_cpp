@@ -1,0 +1,23 @@
+class Solution {
+  private:
+    void solve(vector<bool>& visited,vector<int>& dfs,vector<int> adj[],int currNode){
+        visited[currNode] = true;
+        for(auto it : adj[currNode]){
+            if( visited[it] == false ){
+                dfs.push_back(it);
+                visited[it] = true;
+                solve(visited,dfs,adj,it);
+            }
+        }
+    }
+  public:
+    // Function to return a list containing the DFS traversal of the graph.
+    vector<int> dfsOfGraph(int V, vector<int> adj[]) {
+        vector<bool> visited(V,false);
+        vector<int> dfs;
+        dfs.push_back(0);
+        visited[0] = true;
+        solve(visited,dfs,adj,0);
+        return dfs;
+    }
+};
