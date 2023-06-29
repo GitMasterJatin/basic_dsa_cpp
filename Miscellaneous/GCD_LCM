@@ -1,0 +1,18 @@
+Euclidean division algo
+
+class Solution {
+  private:
+    int gcd(long long A , long long B){
+        if( B == 0 ){
+            return abs(A);
+        }
+        return gcd(B,A%B);
+    }
+  public:
+    vector<long long> lcmAndGcd(long long A , long long B) {
+        long long int GCD = gcd(A,B);
+        long long int product = A*B;
+        long long int LCM = product/GCD;
+        return {LCM,GCD};
+    }
+};
