@@ -1,71 +1,44 @@
 class Solution{
-    public:
-    bool isSafe(int x,int y,vector<vector<int>>& visited,vector<vector<int>> &m,int n){
-        if( (x >= 0) && (x < n) && (y >= 0) && (y < n)
-            && (visited[x][y] == 0) && (m[x][y] == 1) ){
-              return true;   
-            }
+private:
+    int dx[4] = {-1, 0, 1, 0};
+    int dy[4] = {0, 1, 0, -1};
+    vector<char> v = {'U', 'R', 'D', 'L'};
+private:
+    bool CheckIfValidPath(int x, int y, int n, vector<vector<int>>& visited, vector<vector<int>>& matrix){
+        if(x >= 0 && x < n && y >= 0 && y < n && !visited[x][y] && matrix[x][y] == 1){
+            return true;
+        }
         return false;
     }
-    void solve(vector<vector<int>> &m,int n,vector<string>& ans,int srcx,
-            int srcy,vector<vector<int>>& visited,string path){
-        if( (srcx == n-1) && (srcy == n-1) ){
-            ans.push_back(path);
+private:
+    void FindPaths(int x, int y, int n, string s, vector<string>&ans, vector<vector<int>>&visited, vector<vector<int>>& matrix){
+        if(x == n - 1 && y == n - 1){
+            ans.push_back(s);
             return;
         }
-        visited[srcx][srcy] = 1;
-        
-        int x = srcx;
-        int y = srcy + 1;
-        // go dowm
-        if( isSafe(x,y,visited,m,n) ){
-            path.push_back('D');
-            solve(m,n,ans,x,y,visited,path);
-            path.pop_back();
-        }
-        x = srcx-1;
-        y = srcy;
-        // go left
-        if( isSafe(x,y,visited,m,n) ){
-            path.push_back('L');
-            solve(m,n,ans,x,y,visited,path);
-            path.pop_back();
-        } 
-        // go right
-        x = srcx + 1;
-        y = srcy;
-        if( isSafe(x,y,visited,m,n) ){
-            path.push_back('R');
-            solve(m,n,ans,x,y,visited,path);
-            path.pop_back();
-        }
-        // go up
-        x = srcx;
-        y = srcy -1;
-        if( isSafe(x,y,visited,m,n) ){
-            path.push_back('U');
-            solve(m,n,ans,x,y,visited,path);
-            path.pop_back();
-        }
-        visited[srcx][srcy] = 0;        
-    }
-    vector<string> findPath(vector<vector<int>> &m, int n) {
-        vector<string> ans;
-        if( m[0][0] == 0 ){
-            return ans;
-        }
-        int srcx = 0;
-        int srcy = 0;
-        
-        vector<vector<int>> visited;
-        for( int i = 0; i < n; i++ ){
-            for( int j = 0; j < n; j++ ){
-                visited[i][j] = 0;
+        for(int i = 0; i < 4; i++){
+            int newx = x + dx[i];
+            int newy = y + dy[i];
+            if(CheckIfValidPath(newx, newy, n, visited, matrix)){
+                visited[newx][newy] = 1;
+                s += v[i];
+                FindPaths(newx, newy, n, s, ans, visited, matrix);
+                s.pop_back();
+                visited[newx][newy] = 0;
             }
         }
-        string path = "";
-        solve(m,n,ans,srcx,srcy,visited,path);
-        sort(ans.begin(),ans.end());
-        return ans;
+        
     }
+public:
+    vector<string> findPath(vector<vector<int>> &matrix, int n) {
+        vector<string> ans;
+        if(matrix[0][0] != 1){
+            return {}; // mf can't event start
+        }
+        vector<vector<int>> visited(n, vector<int>(n, 0));
+        visited[0][0] = 1;
+        FindPaths(0, 0, n, "", ans, visited, matrix);
+        return ans;
+        
+    }   
 };
