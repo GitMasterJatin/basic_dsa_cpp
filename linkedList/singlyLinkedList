@@ -1,0 +1,103 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+#define endl "\n";
+#define ll long long int;
+class Node
+{
+public:
+    int data;
+    Node *next;
+    // make a constructor to set value of node and set next of node as null.
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+    // destructor
+    ~Node(){
+        int value = this -> data;
+        if( this -> next != NULL ){
+            delete next;
+            this -> next = NULL;
+        }
+    }
+};
+// pass by reference bcz we do not wish to create copies.
+void InsertAtHead(Node *&head, int d)
+{
+    Node *temp = new Node(d);
+    temp->next = head;
+    head = temp;
+}
+void print(Node *&head)
+{
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->data << endl;
+        temp = temp->next;
+    }
+}
+void InsertatTail(Node *&head, int d)
+{
+    Node *temp = head;
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+    Node *node = new Node(d);
+    temp->next = node;
+}
+void InsertAtPosition(Node *&head, int position, int d)
+{
+    Node *temp = head;
+    int count = 1;
+
+    if( position == 1 ){
+        InsertAtHead(head,d);
+        return;
+    }
+
+    while (count < position - 1)
+    {
+        count++;
+        temp = temp->next;
+    }
+
+    Node *val = new Node(d);
+    val->next = temp->next;
+    temp->next = val;
+}
+void deleteNode(Node* &head, int position){
+
+    if( position == 1 ){
+        Node* temp = head;
+        head = head -> next;
+        temp -> next = NULL;
+        delete temp;
+    }
+    Node* temp = head;
+    Node* prev = NULL;
+    int count = 1;
+    while( count < position ){
+        prev = temp;
+        temp = temp -> next;
+        count ++;
+    }
+    prev -> next = temp -> next;
+    temp -> next = NULL;
+    delete temp;
+}
+int main()
+{
+    Node *node1 = new Node(10);
+    // cout << node1->data << endl;
+    Node *head = node1;
+    InsertAtHead(head, 23);
+    // print(head);
+    InsertatTail(head, 35);
+    InsertAtPosition(head, 3, 15);
+    print(head);
+    return 0;
+}
