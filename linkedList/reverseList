@@ -1,0 +1,51 @@
+
+Iterative
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        
+        if( head == NULL || head->next == NULL ){
+            return head;
+        }
+
+        ListNode* prev = NULL;
+        ListNode* curr = head;
+        ListNode* forward = NULL;
+
+        while( curr ){
+            forward = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = forward;
+        }
+
+        return prev;
+    }
+};
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Recursive 
+
+class Solution {
+private:
+    void reverse(ListNode* &head, ListNode* prev, ListNode* curr) {
+        if (curr == NULL) {
+            head = prev;
+            return;
+        }
+        ListNode* forward = curr->next;
+        reverse(head, curr, forward);
+        curr->next = prev;
+    }
+public:
+    ListNode* reverseList(ListNode* head) {
+        
+        if( head == NULL || head->next == NULL ){
+            return head;
+        }
+        reverse(head, NULL, head);
+        return head;
+    }
+};
+----------------------------------------------------------------------------------------------------------------------------------------------------
