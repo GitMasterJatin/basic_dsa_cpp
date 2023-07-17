@@ -1,0 +1,69 @@
+
+Node* merge(Node* right, Node* down) {
+    if (down == NULL) {
+        return right;
+    }
+    if (right == NULL) {
+        return down;
+    }
+    Node* ans = right;
+    if (right->data < down->data) {
+        ans->next = NULL;
+        ans->bottom = merge(right->bottom, down);
+    }
+    else {
+        ans = down;
+        ans->next = NULL;
+        ans->bottom = merge(right, down->bottom);
+    }
+    
+    return ans;
+}
+Node *flatten(Node *root)
+{
+    if (root == NULL || root->next == NULL) {
+        return root;
+    }
+    Node* down = root;
+    Node* right = root->next;
+    down->next = NULL;
+    flatten(right);
+    
+    Node* ans = merge(right, down);
+    return ans;
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Node* mergeLinkedList(Node* a, Node* b){
+    Node* head = new Node(-1);
+    Node* temp = head;
+    while(a != NULL && b != NULL){
+        if(a -> data < b -> data){
+            temp -> bottom = a;
+            a = a -> bottom;
+            temp = temp -> bottom;
+        }
+        else{
+            temp -> bottom = b;
+            temp = temp -> bottom;
+            b = b -> bottom;
+        }
+    }
+    if(a){
+        temp -> bottom = a;
+    }
+    else{
+        temp -> bottom = b;
+    }
+    return head -> bottom;
+}
+Node *flatten(Node *root)
+{
+   if(root == NULL || root -> next == NULL){
+       return root;
+   }
+   root -> next = flatten(root -> next);
+   root = mergeLinkedList(root, root -> next);
+   return root;
+}
