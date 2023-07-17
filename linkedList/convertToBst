@@ -1,0 +1,52 @@
+
+class Solution {
+private:
+    ListNode* findMid(ListNode* &head) {
+        if (head == NULL || head->next == NULL) {
+            return head;
+        }
+        ListNode* slow = head, *fast = head->next;
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+    TreeNode* makeTree(ListNode* &head) {
+        if (head == NULL) {
+             return NULL;
+        }
+        if (head->next == NULL) {
+            TreeNode* nxt = new TreeNode(head->val);
+            return nxt;
+        }
+        ListNode* mid = findMid(head);
+        if( mid == NULL ){
+            return NULL;
+        }
+        ListNode* firstHalf = head, *secondHalf = NULL;
+        ListNode* temp = head;
+        ListNode* prev = NULL;
+        while ( temp != mid) {
+            prev = temp;
+            temp = temp->next;
+        }
+        if (prev == NULL) {
+            firstHalf = NULL;
+        }
+        else {
+            prev->next = NULL;
+        }
+        TreeNode* root = new TreeNode(mid->val);
+        root->left = makeTree(firstHalf);
+        root->right = makeTree(mid->next);
+        return root;
+    }
+public:
+    TreeNode* sortedListToBST(ListNode* head) {
+        if (head == NULL) {
+            return NULL;
+        }
+        return makeTree(head);
+    }
+};
