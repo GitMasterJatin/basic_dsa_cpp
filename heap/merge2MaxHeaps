@@ -1,0 +1,42 @@
+
+class Solution{
+    private:
+    void heapify(vector<int>& c, int size, int i) {
+        if (i >= size) {
+            return;
+        }
+        int largest = i;
+        int left = 2*i + 1;
+        int right = 2*i + 2;
+        
+        if ((left < size) && (c[largest] < c[left])) {
+            largest = left;
+        }
+        if ((right < size) && (c[right] > c[largest])) {
+            largest = right;
+        }
+        
+        if (largest != i) {
+            swap(c[largest], c[i]);
+            heapify(c, size, largest);
+        }
+        else {
+            return;
+        }
+    }
+    public:
+    vector<int> mergeHeaps(vector<int> &a, vector<int> &b, int n, int m) {
+        vector<int> c;
+        for (int i = 0; i < n; i++) {
+            c.push_back(a[i]);
+        }
+        for (int i = 0; i < m; i++) {
+            c.push_back(b[i]);
+        }
+        int z = c.size();
+        for (int i = z/2; i >= 0; i--) {
+            heapify(c, z, i);
+        }
+        return c;
+    }
+};
