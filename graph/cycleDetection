@@ -1,0 +1,81 @@
+BFS
+
+class Solution {
+  private:
+  bool isCyclic(int v, unordered_map<int, bool>& visited, vector<int> adj[]) {
+      unordered_map<int, int> parent;
+      parent[v] = -1;
+      visited[v] = 1;
+      queue<int> q;
+      q.push(v);
+      
+    while (!q.empty()) {
+        int front = q.front();
+        q.pop();
+        for (auto neighbour : adj[front]) {
+            if ((visited[neighbour] == true) && (neighbour != parent[front])) {
+                return true;
+            }
+            else if (!visited[neighbour]) {
+                q.push(neighbour);
+                visited[neighbour] = true;
+                parent[neighbour] = front;
+            }
+        }
+    }
+        return false;
+      
+  }
+  public:
+    // Function to detect cycle in an undirected graph.
+    bool isCycle(int V, vector<int> adj[]) {
+        // to handle all componenets
+        unordered_map<int, bool> visited;
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                bool ans = isCyclic(i, visited, adj);
+                if (ans == true) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+};
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+DFS
+
+class Solution {
+private:
+    bool isCyclic(int v, int parent, unordered_map<int, bool>& visited, vector<int> adj[]) {
+        visited[v] = true;
+        for (auto neighbour : adj[v]) {
+            if (!visited[neighbour]) {
+                bool ans = isCyclic(neighbour, v, visited, adj);
+                if (ans) {
+                    return true;
+                }
+            }
+            else if (neighbour != parent) {
+                return true;
+            }
+        }
+        return false;
+  }
+public:
+    // Function to detect cycle in an undirected graph.
+    bool isCycle(int V, vector<int> adj[]) {
+        // to handle all componenets
+        unordered_map<int, bool> visited;
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                bool ans = isCyclic(i, -1, visited, adj);
+                if (ans == true) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+};
