@@ -1,0 +1,37 @@
+int ternarySearch(vector<int> &v, int key)
+{
+    int l = 0, h = v.size() - 1;
+    while (l <= h)
+    {
+        int mid1 = l + (h - l) / 3;
+        int mid2 = h - (h - l) / 3;
+        if (v[mid1] == key)
+        {
+            return mid1;
+        }
+        else if (v[mid2] == key)
+        {
+            return mid2;
+        }
+        else if (v[mid1] > key)
+        {
+            h = mid1 - 1;
+        }
+        else if (v[mid2] < key)
+        {
+            l = mid2 + 1;
+        }
+        else
+        {
+            l = mid1 + 1;
+            h = mid2 - 1;
+        }
+    }
+    return -1;
+}
+int main()
+{
+    vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+    cout << ternarySearch(v, 7);
+    return 0;
+}
