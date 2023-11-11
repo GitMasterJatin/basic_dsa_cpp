@@ -1,0 +1,106 @@
+Q) https://www.codingninjas.com/studio/problems/complete-string_2687860
+
+#include <bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+#define ll long long int
+
+struct Node
+{
+    Node *links[26];
+    bool flag = false;
+    bool containsKey(char ch)
+    {
+        return (links[ch - 'a'] != NULL);
+    }
+    Node *get(char ch)
+    {
+        return links[ch - 'a'];
+    }
+    void put(char ch, Node *node)
+    {
+        links[ch - 'a'] = node;
+    }
+    void setEnd()
+    {
+        flag = true;
+    }
+    bool isEnd()
+    {
+        return flag;
+    }
+};
+class Trie
+{
+    Node *root;
+
+public:
+    Trie()
+    {
+        root = new Node();
+    }
+    void insert(string word)
+    {
+        Node *node = root;
+        for (int i = 0; i < word.length(); i++)
+        {
+            if (!node->containsKey(word[i]))
+            {
+                node->put(word[i], new Node());
+            }
+            node = node->get(word[i]);
+        }
+        node->setEnd();
+    }
+    bool prefixExists(string word)
+    {
+        bool f = true;
+        Node *temp = root;
+        for (int i = 0; i < word.length(); i++)
+        {
+            if (temp->containsKey(word[i]))
+            {
+                // flag needs tp be true;
+                temp = temp->get(word[i]);
+                f = (f & (temp->isEnd()));
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return f;
+    }
+};
+string completeString(vector<string> &words)
+{
+    Trie *trie = new Trie();
+    for (auto word : words)
+    {
+        trie->insert(word);
+    }
+    string longest = "";
+    for (auto word : words)
+    {
+        if (trie->prefixExists(word))
+        {
+            if (word.length() > longest.length())
+            {
+                longest = word;
+            }
+            else if (word.length() == longest.length() && word < longest)
+            {
+                longest = word;
+            }
+        }
+    }
+    if (longest == "")
+        return "None";
+    return longest;
+}
+int main()
+{
+    vector<string> v = {"n", "ni", "ninj", "ninja", "ninga"};
+    cout << completeString(v);
+    return 0;
+}
