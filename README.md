@@ -1,0 +1,1 @@
+Welcome to the Data Structures and Algorithms repository! This repository contains a collection of basic algorithms and data structures implemented in C++. Whether you are a beginner looking to learn the fundamentals of algorithms or an experienced developer brushing up on your skills, this repository has something for everyone.
