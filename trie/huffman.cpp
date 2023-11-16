@@ -29,8 +29,7 @@ class HuffmanEncoder
 private:
     unordered_map<char, int> frequency;
     priority_queue<MinHeapNode *, vector<MinHeapNode *>, compare> minHeap;
-    MinHeapNode *left, *right, *top;
-    MinHeapNode *root = top;
+    MinHeapNode *left, *right, *top, *root;
     void countFrequency(string s)
     {
         for (int i = 0; i < s.length(); i++)
@@ -69,6 +68,7 @@ public:
             minHeap.push(top);
             cout << top->data << endl;
         }
+        root = top;
     }
     void printCodes(string str)
     {
@@ -88,7 +88,7 @@ public:
 };
 int main()
 {
-    string s = "ddbbb";
+    string s = "ddbvkjblnbb";
     HuffmanEncoder hf;
     hf.encode(s);
     // hf.printFrequency();
