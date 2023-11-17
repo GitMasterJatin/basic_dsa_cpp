@@ -58,19 +58,19 @@ public:
         {
             left = minHeap.top();
             minHeap.pop();
-            cout << left->data << endl;
+            // cout << left->data << endl;
             right = minHeap.top();
             minHeap.pop();
-            cout << right->data << endl;
+            // cout << right->data << endl;
             top = new MinHeapNode('$', left->freq + right->freq);
             top->left = left;
             top->right = right;
             minHeap.push(top);
-            cout << top->data << endl;
+            // cout << top->data << endl;
         }
         root = top;
     }
-    void printCodes(string str)
+    void printCode(string str, MinHeapNode *root)
     {
         if (!root)
         {
@@ -80,10 +80,12 @@ public:
         {
             cout << root->data << ": " << str << endl;
         }
-        root = root->left;
-        printCodes(str + "0");
-        root = root->right;
-        printCodes(str + "1");
+        printCode(str + "0", root->left);
+        printCode(str + "1", root->right);
+    }
+    void printCodes(string str)
+    {
+        printCode(str, root);
     }
 };
 int main()
